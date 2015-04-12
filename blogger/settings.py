@@ -14,6 +14,12 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MEDIA_ROOT = BASE_DIR+"/media"
+STATIC_ROOT = BASE_DIR+"/static"
+STATICFILES_DIRS = (
+        BASE_DIR+"/globstatic",
+        )
+# FIXTURE_DIRS = (BASE_DIR+"/path/xyz", )
 
 
 # Quick-start development settings - unsuitable for production
@@ -27,12 +33,9 @@ SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
 DEBUG = True
 TEMPLATE_DEBUG = True
 
-
 ALLOWED_HOSTS = []
 
-
 # Application definition
-
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -41,7 +44,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 )
-
+INSTALLED_APPS += ("blog", )
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -59,7 +62,7 @@ ROOT_URLCONF = 'blogger.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR+"/templates", ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -113,3 +116,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
+EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
+EMAIL_PORT = 587
+

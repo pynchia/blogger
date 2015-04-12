@@ -1,0 +1,100 @@
+{% load staticfiles %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>FatalistiSiNasce</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="{% static "style.css" %}" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="{% static "js/cufon-yui.js" %}"></script>
+<script type="text/javascript" src="{% static "js/arial.js" %}"></script>
+<script type="text/javascript" src="{% static "js/cuf_run.js" %}"></script>
+</head>
+<body>
+<div class="main">
+  <div class="header">
+    <div class="header_resize">
+      <div class="logo">
+	      <h1><a href="{% url 'home' %}"><span>Fatalisti</span> si nasce <small>esperienze di vita vissuta</small></a></h1>
+      </div>
+      <div class="clr"></div>
+      <div class="menu_nav">
+        <ul>
+		<li {% block nav_blog %}{% endblock %}><a href="{% url 'blog:blog' %}">Blog</a></li>
+		<li {% block nav_stats %}{% endblock %}><a href="{% url 'blog:stats' %}">Stats</a></li>
+		<li {% block nav_about %}{% endblock %}><a href="{% url 'blog:about' %}">About</a></li>
+		<li {% block nav_contact %}{% endblock %}><a href="{% url 'blog:contact' %}">Contact us</a></li>
+		{% if user.is_authenticated %}
+			<li {% block nav_createarticle %}{% endblock %}>
+				<a href="{% url 'createarticle' %}">Create article</a>
+			</li>
+			<li {% block nav_logout %}{% endblock %}>
+				<a href="{% url 'logout' %}">Logout</a>
+			</li>
+		{% else %}
+			<li {% block nav_login %}{% endblock %}>
+				<a href="{% url 'login' %}">Staff login</a>
+			</li>
+		{% endif %}
+        </ul>
+      </div>
+      <div class="searchform">
+        <form id="formsearch" name="formsearch" method="post" action="#">
+		<input name="button_search" src="{% static "images/search_btn.gif" %}" class="button_search" type="image" />
+          <span>
+          <input name="editbox_search" class="editbox_search" id="editbox_search" maxlength="80" value="Search" type="text" />
+          </span>
+          <div class="clr"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="content">
+    <div class="content_resize">
+      <div class="mainbar">
+	      {% block mainbar %}{% endblock %}
+      </div>
+      <div class="sidebar">
+	      {% block sidebar %}{% endblock %}
+      </div>
+      <div class="clr"></div>
+    </div>
+  </div>
+  <div class="fbg">
+    <div class="fbg_resize">
+      <div class="col c1">
+        <h2><span>Image Gallery</span></h2>
+	<a href="#"><img src="{% static "images/pic1.jpg" %}" width="56" height="56" alt="" /></a>
+	<a href="#"><img src="{% static "images/pic2.jpg" %}" width="56" height="56" alt="" /></a>
+	<a href="#"><img src="{% static "images/pic3.jpg" %}" width="56" height="56" alt="" /></a>
+	<a href="#"><img src="{% static "images/pic4.jpg" %}" width="56" height="56" alt="" /></a>
+	<a href="#"><img src="{% static "images/pic5.jpg" %}" width="56" height="56" alt="" /></a>
+	<a href="#"><img src="{% static "images/pic6.jpg" %}" width="56" height="56" alt="" /></a> </div>
+      <div class="col c2">
+        <h2><span>Lorem Ipsum</span></h2>
+        <p>Lorem ipsum dolor<br />
+          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero. Suspendisse bibendum. Cras id urna. <a href="#">Morbi tincidunt, orci ac convallis aliquam</a>, lectus turpis varius lorem, eu posuere nunc justo tempus leo. Donec mattis, purus nec placerat bibendum, dui pede condimentum odio, ac blandit ante orci ut diam.</p>
+      </div>
+      <div class="col c3">
+        <h2><span>About</span></h2>
+	<img src="{% static "images/white.jpg" %}" width="56" height="56" alt="" />
+        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero. Suspendisse bibendum. Cras id urna. Morbi tincidunt, orci ac convallis aliquam, lectus turpis varius lorem, eu posuere nunc justo tempus leo. llorem, eu posuere nunc justo tempus leo. Donec mattis, purus nec placerat bibendum. <a href="#">Learn more...</a></p>
+      </div>
+      <div class="clr"></div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="footer_resize">
+      <p class="lf">&copy; Copyright MyWebSite. Designed by Blue <a href="http://www.bluewebtemplates.com/">Website Templates</a></p>
+      <ul class="fmenu">
+        <li class="active"><a href="index.html">Home</a></li>
+        <li><a href="support.html">Support</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contacts</a></li>
+      </ul>
+      <div class="clr"></div>
+    </div>
+  </div>
+</div>
+<div align=center>This template  downloaded form <a href='http://all-free-download.com/free-website-templates/'>free website templates</a></div></body>
+</html>

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block nav_createarticle %}class="active"{% endblock %}
+{% block mainbar %}
+	<div class="article">
+		<h2>Create a new article</h2>
+		<div class="clr"></div>
+		<ol>
+		<form enctype="multipart/form-data" method='POST' action=''>
+			{% csrf_token %}
+			{{ form.as_ul }}
+			<li>
+			<input type="image" name="imageField" id="imageField" src="{% static "images/submit.gif" %}" class="send" />
+			</li>
+		</form>
+		</ol>
+	</div>
+{% endblock %}
