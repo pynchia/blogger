@@ -1,13 +1,17 @@
 {% extends "base.html" %}
 {% block nav_blog %}class="active"{% endblock %}
 {% block mainbar %}
-for all the latest posts
+{% for article in object_list %}
 	<div class="article">
-		<h2><span>A Blog</span> Entry</h2>
+		<h2>{{ article.title }}</h2>
 		<div class="clr"></div>
-		<p>Posted by <a href="#">Owner</a> <span>&nbsp;&bull;&nbsp;</span> Fil    ed under <a href="#">templates</a>, <a href="#">internet</a></p>
-		<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec lib    ero. Suspendisse bibendum. Cras id urna.</p>
-		 47           <p>Tagged: <a href="#">orci</a>, <a href="#">lectus</a>, <a href="#">v    arius</a>, <a href="#">turpis</a></p>
-		 <p><a href="#"><strong>Comments (3)</strong></a> <span>&nbsp;&bull;&nb    sp;</span> May 27, 2015 <span>&nbsp;&bull;&nbsp;</span> <a href="#"><strong>Edit    </strong></a></p>
+		<p>Posted by <a href="#">{{ article.author.first_name }}&nbsp{{ article.author.last_name }}</a> <span>&nbsp;&bull;&nbsp;</span> Filed under <a href="#">categoryA</a>, <a href="#">categoryB</a></p>
+		<img src="{{ article.image.url }}" width="256" height="160" alt="" class="fl">
+		<p>{{ article.body }}</p>
+		<p>Tagged: <a href="#">Tag1</a>, <a href="#">Tag2</a></p>
+		<p><a href="#" class="obg"><strong>Read more</strong></a> <sp    an>&nbsp;&bull;&nbsp;</span><a href="#" class="obg"><strong>Comments (N)</strong></a> <span>&nbsp;&bull;&nbsp;</span>Datetime<span>&nbsp;&bull;&nbsp;</span> <a href="#"><strong>Edit</strong></a></p>
+		<div class="clr"></div>
+		<div class="clr"></div>
 	</div>
+{% endfor %}
 {% endblock %}

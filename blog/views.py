@@ -1,8 +1,10 @@
+from django.core.urlresolvers import reverse_lazy
 from django.views.generic import ListView, TemplateView, FormView, CreateView
-from . import forms
+from . import forms, models
 
 class BlogView(ListView):
     template_name = "blog/blog.html"
+    model = models.Article
 
 
 class StatsView(TemplateView):
@@ -21,4 +23,8 @@ class ContactView(FormView):
 class CreateArticle(CreateView):
     form_class = forms.ArticleForm
     template_name = "blog/createarticle.html"
+    success_url = reverse_lazy("blog:blog")
 
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super(CreateArticle, self).form_valid(form)
