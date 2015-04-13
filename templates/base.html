@@ -28,7 +28,7 @@
 				<a href="{% url 'blog:createarticle' %}">Create article</a>
 			</li>
 			<li>
-				<a href="{% url 'logout' %}">Logout</a>
+			<a href="{% url 'logout' %}">Logout {{ user }}</a>
 			</li>
 		{% else %}
 			<li {% block nav_login %}{% endblock %}>
