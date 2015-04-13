@@ -5,11 +5,28 @@
 	<div class="article">
 		<h2>{{ article.title }}</h2>
 		<div class="clr"></div>
-		<p>Posted by <a href="#">{{ article.author.first_name }}&nbsp{{ article.author.last_name }}</a> <span>&nbsp;&bull;&nbsp;</span> Filed under <a href="#">categoryA</a>, <a href="#">categoryB</a></p>
+		<p>Posted by <a href="#">{{ article.author.first_name }}&nbsp{{ article.author.last_name }}</a>
+		 on {{ article.published_on }}
+		</p>
 		<img src="{{ article.image.url }}" width="256" height="160" alt="" class="fl">
-		<p>{{ article.body }}</p>
-		<p>Tagged: <a href="#">Tag1</a>, <a href="#">Tag2</a></p>
-		<p><a href="#" class="obg"><strong>Read more</strong></a> <sp    an>&nbsp;&bull;&nbsp;</span><a href="#" class="obg"><strong>Comments (N)</strong></a> <span>&nbsp;&bull;&nbsp;</span>Datetime<span>&nbsp;&bull;&nbsp;</span> <a href="#"><strong>Edit</strong></a></p>
+		<p>{{ article.body|truncatewords:100 }}</p>
+		<p>
+		 <a href="#" class="obg"><strong>Read more</strong></a>
+	       	 <span>&nbsp;&bull;&nbsp;</span>
+		 <a href="#" class="obg"><strong>Comments (N)</strong></a>
+		 {% if article.author == user %}
+		  <span>&nbsp;&bull;&nbsp;</span>
+		  <a href="#"><strong>Edit</strong></a>
+		 {% endif %}
+		</p>
+		<p>
+		 Filed under
+		 {% for categ in article.categories.all %}
+			<a href="#">{{ categ }}</a>
+		 {% endfor %}
+		 <span>&nbsp;&bull;&nbsp;</span>
+		 Tags: <a href="#">Tag1</a>, <a href="#">Tag2</a>
+		</p>
 		<div class="clr"></div>
 		<div class="clr"></div>
 	</div>

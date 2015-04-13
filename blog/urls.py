@@ -15,7 +15,10 @@ urlpatterns = [
     url(r'^contact/$',
         views.ContactView.as_view(),
         name='contact'),
+    url(r'^userarticles/$',
+        views.UserArticlesView.as_view(),
+        name='userarticles'),
     url(r'^createarticle/$',
-        login_required(views.CreateArticle.as_view()),
+        login_required(views.CreateArticleView.as_view()),
         name='createarticle'),
 ]

@@ -23,18 +23,6 @@
 		<li {% block nav_stats %}{% endblock %}><a href="{% url 'blog:stats' %}">Stats</a></li>
 		<li {% block nav_about %}{% endblock %}><a href="{% url 'blog:about' %}">About</a></li>
 		<li {% block nav_contact %}{% endblock %}><a href="{% url 'blog:contact' %}">Contact us</a></li>
-		{% if user.is_authenticated %}
-			<li {% block nav_createarticle %}{% endblock %}>
-				<a href="{% url 'blog:createarticle' %}">Create article</a>
-			</li>
-			<li>
-			<a href="{% url 'logout' %}">Logout {{ user }}</a>
-			</li>
-		{% else %}
-			<li {% block nav_login %}{% endblock %}>
-				<a href="{% url 'login' %}">Staff login</a>
-			</li>
-		{% endif %}
         </ul>
       </div>
       <div class="searchform">
@@ -51,10 +39,32 @@
   <div class="content">
     <div class="content_resize">
       <div class="mainbar">
-	      {% block mainbar %}{% endblock %}
+      {% block mainbar %}{% endblock %}
       </div>
       <div class="sidebar">
-	      {% block sidebar %}{% endblock %}
+      {% block sidebar %}
+      	<div class="gadget">
+	 <h2 class="star"><span><cufon class="cufon cufon-canvas" alt="Staff menu" style="width: 90px; height: 24px;"><canvas width="138" height="34" style="width: 138px; height: 34px; top: -5px; left: -15px;"></canvas><cufontext>Staff menu</cufontext></cufon></span></h2>
+	 <div class="clr"></div>
+	  <ul class="sb_menu">
+	  {% if user.is_authenticated %}
+	   <li>
+	    <a href="{% url 'blog:createarticle' %}">Create a new article</a>
+	   </li>
+	   <li>
+	    <a href="{% url 'blog:userarticles' %}">Show my articles</a>
+	   </li>
+	   <li>
+	    <a href="{% url 'logout' %}">Logout {{ user }}</a>
+	   </li>
+	  {% else %}
+	   <li>
+	    <a href="{% url 'login' %}">Staff login</a>
+	   </li>
+	  {% endif %}
+  	  </ul>
+	</div>
+      {% endblock %}
       </div>
       <div class="clr"></div>
     </div>

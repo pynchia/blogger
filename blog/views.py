@@ -25,11 +25,16 @@ class ContactView(FormView):
         return super(ContactView, self).form_valid(form)
 
 
-class CreateArticle(CreateView):
+class UserArticlesView(ListView):
+    # better to use the combined view showing the details of the author
+    template_name = "blog/userarticles.html"
+
+
+class CreateArticleView(CreateView):
     form_class = forms.ArticleForm
     template_name = "blog/createarticle.html"
     success_url = reverse_lazy("blog:blog")
 
     def form_valid(self, form):
         form.instance.author = self.request.user
-        return super(CreateArticle, self).form_valid(form)
+        return super(CreateArticleView, self).form_valid(form)
