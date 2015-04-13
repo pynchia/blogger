@@ -18,6 +18,11 @@ class AboutView(TemplateView):
 class ContactView(FormView):
     form_class = forms.ContactForm
     template_name = "blog/contact.html"
+    success_url = reverse_lazy("blog:blog")
+
+    def form_valid(self, form):
+        form.send_msg()
+        return super(ContactView, self).form_valid(form)
 
 
 class CreateArticle(CreateView):
