@@ -38,6 +38,6 @@ class ArticleForm(forms.ModelForm):
         categs = self.cleaned_data.get('categories')
         if tags and categs:
             categs = [c.name.lower() for c in categs]
-            tags += " "+" ".join(c for c in categs if c not in tags)
+            tags += " "+" ".join(t for t in categs if t not in tags)
             self.cleaned_data['tags'] = tags
 
