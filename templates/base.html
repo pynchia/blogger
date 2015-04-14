@@ -18,12 +18,12 @@
       </div>
       <div class="clr"></div>
       <div class="menu_nav">
-        <ul>
-		<li {% block nav_blog %}{% endblock %}><a href="{% url 'blog:blog' %}">Blog</a></li>
-		<li {% block nav_stats %}{% endblock %}><a href="{% url 'blog:stats' %}">Stats</a></li>
-		<li {% block nav_about %}{% endblock %}><a href="{% url 'blog:about' %}">About</a></li>
-		<li {% block nav_contact %}{% endblock %}><a href="{% url 'blog:contact' %}">Contact us</a></li>
-        </ul>
+       <ul>
+	<li {% block nav_blog %}{% endblock %}><a href="{% url 'blog:blog' %}">Blog</a></li>
+	<li {% block nav_stats %}{% endblock %}><a href="{% url 'blog:stats' %}">Stats</a></li>
+	<li {% block nav_about %}{% endblock %}><a href="{% url 'blog:about' %}">About</a></li>
+	<li {% block nav_contact %}{% endblock %}><a href="{% url 'blog:contact' %}">Contact</a></li>
+       </ul>
       </div>
       <div class="searchform">
         <form id="formsearch" name="formsearch" method="post" action="#">
@@ -49,17 +49,17 @@
 	  <ul class="sb_menu">
 	  {% if user.is_authenticated %}
 	   <li>
-	    <a href="{% url 'blog:createarticle' %}">Create a new article</a>
+	    <a href="{% url 'blog:createarticle' %}">New article</a>
 	   </li>
 	   <li>
-	    <a href="{% url 'blog:userarticles' %}">Show my articles</a>
+	    <a href="{% url 'blog:userarticles' %}">My articles</a>
 	   </li>
 	   <li>
-	    <a href="{% url 'logout' %}">Logout {{ user }}</a>
+	   <a href="{% url 'logout' %}">Logout <strong>{{ user }}</strong></a>
 	   </li>
 	  {% else %}
 	   <li>
-	    <a href="{% url 'login' %}">Staff login</a>
+	    <a href="{% url 'login' %}">Login</a>
 	   </li>
 	  {% endif %}
   	  </ul>

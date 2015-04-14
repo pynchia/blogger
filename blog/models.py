@@ -21,11 +21,11 @@ class Article(models.Model):
                              help_text='concise but useful')
     body = models.TextField(help_text='the content')
     tags = models.CharField(max_length=128, blank=True,
-                            help_text='separate with space')
+                            help_text='space or comma separated')
     IMG_MAX_WIDTH = 256
     IMG_MAX_HEIGHT = 160
     image = models.ImageField(upload_to='articleimg',
-                              help_text='optimal size %d by %d' % (
+                              help_text='optimal size %dx%d pixels' % (
                                             IMG_MAX_WIDTH, IMG_MAX_HEIGHT))
 
     def __unicode__(self):

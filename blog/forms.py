@@ -1,5 +1,6 @@
 from django import forms
 from django.core.mail import EmailMessage
+import re
 from . import models
 from django.conf import settings
 
@@ -28,4 +29,15 @@ class ArticleForm(forms.ModelForm):
         model = models.Article
         fields = ['title', 'body', 'categories', 'tags', 'image']
 
+    def clean_tags(self):
+        return " ".join(set(re.findall(r"[\w'-]+",
+                                       self.cleaned_data['tags']))).lower()
+
+    def clean(self):
+        tags = self.cleaned_data.get('tags')
+        categs = self.cleaned_data.get('categories')
+        if tags and categs:
+            categs = [c.name.lower() for c in categs]
+            tags += " "+" ".join(c for c in categs if c not in tags)
+            self.cleaned_data['tags'] = tags
 
