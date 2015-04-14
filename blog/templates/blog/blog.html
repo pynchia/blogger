@@ -20,12 +20,12 @@
 		 {% endif %}
 		</p>
 		<p>
-		 Filed under
+		 Filed under:
 		 {% for categ in article.categories.all %}
-			<a href="#">{{ categ }}</a>
+			<a href="#">{{ categ|capfirst }}</a>
 		 {% endfor %}
 		 <span>&nbsp;&bull;&nbsp;</span>
-		 Tags: <a href="#">{{ article.tags }}</a>
+		 Tags: {{ article.tags }}
 		</p>
 		<div class="clr"></div>
 		<div class="clr"></div>
