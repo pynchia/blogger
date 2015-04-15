@@ -47,15 +47,15 @@
 	 <h2 class="star"><span><cufon class="cufon cufon-canvas" alt="Staff menu" style="width: 90px; height: 24px;"><canvas width="138" height="34" style="width: 138px; height: 34px; top: -5px; left: -15px;"></canvas><cufontext>Staff menu</cufontext></cufon></span></h2>
 	 <div class="clr"></div>
 	  <ul class="sb_menu">
-	  {% if user.is_authenticated %}
+	  {% if request.user.is_authenticated %}
 	   <li>
 	    <a href="{% url 'blog:createarticle' %}">New article</a>
 	   </li>
 	   <li>
-	    <a href="{% url 'blog:authorarticles' pk=user.id %}">My articles</a>
+	    <a href="{% url 'blog:authorarticles' pk=request.user.id %}">My articles</a>
 	   </li>
 	   <li>
-	   <a href="{% url 'logout' %}">Logout <strong>{{ user }}</strong></a>
+	   <a href="{% url 'logout' %}">Logout <strong>{{ request.user.get_username }}</strong></a>
 	   </li>
 	  {% else %}
 	   <li>

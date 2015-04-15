@@ -11,7 +11,7 @@
 		 <a href="#" class="obg"><strong>Read more</strong></a>
 	       	 <span>&nbsp;&bull;&nbsp;</span>
 		 <a href="#" class="obg"><strong>Comments (N)</strong></a>
-		 {% if article.author == user %}
+		 {% if article.author == request.user %}
 		  <span>&nbsp;&bull;&nbsp;</span>
 		  <a href="#"><strong>Edit</strong></a>
 		 {% endif %}
