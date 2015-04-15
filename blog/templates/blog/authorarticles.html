@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block nav_blog %}class="active"{% endblock %}
+{% block mainbar %}
+<div class="article">
+	<h2>Articles posted by {{ author.first_name }}&nbsp{{ author.last_name }}</h2>
+	 <p>Username: {{ author.username }}</p>
+	 <p>email: {{ author.email }}</p>
+	 <p>Joined on: {{ author.date_joined }}</p>
+</div>
+<div class="clr"></div>
+{% include "blog/articles.html" %}
+{% endblock %}

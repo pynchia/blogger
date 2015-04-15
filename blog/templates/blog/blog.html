@@ -1,45 +1,5 @@
 {% extends "base.html" %}
 {% block nav_blog %}class="active"{% endblock %}
 {% block mainbar %}
-{% for article in article_list %}
-	<div class="article">
-		<h2>{{ article.title }}</h2>
-		<div class="clr"></div>
-		<p>Posted by <a href="#">{{ article.author.first_name }}&nbsp{{ article.author.last_name }}</a>
-		 on {{ article.published_on }}
-		</p>
-		<img src="{{ article.image.url }}" width="256" height="160" alt="" class="fl">
-		<p>{{ article.body|truncatewords:100 }}</p>
-		<p>
-		 <a href="#" class="obg"><strong>Read more</strong></a>
-	       	 <span>&nbsp;&bull;&nbsp;</span>
-		 <a href="#" class="obg"><strong>Comments (N)</strong></a>
-		 {% if article.author == user %}
-		  <span>&nbsp;&bull;&nbsp;</span>
-		  <a href="#"><strong>Edit</strong></a>
-		 {% endif %}
-		</p>
-		<p>
-		 Filed under:
-		 {% for categ in article.categories.all %}
-			<a href="#">{{ categ|capfirst }}</a>
-		 {% endfor %}
-		 <span>&nbsp;&bull;&nbsp;</span>
-		 Tags: {{ article.tags }}
-		</p>
-		<div class="clr"></div>
-		<div class="clr"></div>
-	</div>
-{% endfor %}
-<div class="pagination">
-Archive: 
- {% if page_obj.has_previous %}
-  <a href="?page=1" class="page">latest</a>
-  <a href="?page={{ page_obj.previous_page_number }}" class="page">younger</a>
- {% endif %}
- {% if page_obj.has_next %}
-  <a href="?page={{ page_obj.next_page_number }}" class="page">older</a>
-  <a href="?page={{ page_obj.paginator.num_pages }}" class="page">oldest</a>
- {% endif %}
-</div>
+{% include "blog/articles.html" %}
 {% endblock %}

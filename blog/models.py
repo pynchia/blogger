@@ -17,6 +17,7 @@ class Article(models.Model):
     author = models.ForeignKey(User, editable=False)
     published_on = models.DateTimeField(auto_now_add=True, editable=False)
     categories = models.ManyToManyField(Category,
+                                        related_name='articles',
                                         help_text='as many as necessary')
     title = models.CharField(max_length=128,
                              help_text='concise but useful')

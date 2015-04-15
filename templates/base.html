@@ -52,7 +52,7 @@
 	    <a href="{% url 'blog:createarticle' %}">New article</a>
 	   </li>
 	   <li>
-	    <a href="{% url 'blog:userarticles' %}">My articles</a>
+	    <a href="{% url 'blog:authorarticles' pk=user.id %}">My articles</a>
 	   </li>
 	   <li>
 	   <a href="{% url 'logout' %}">Logout <strong>{{ user }}</strong></a>
