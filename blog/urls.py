@@ -16,7 +16,7 @@ urlpatterns = [
         views.ContactView.as_view(),
         name='contact'),
     url(r'^userarticles/$',
-        views.UserArticlesView.as_view(),
+        views.AuthorArticlesView.as_view(),
         name='userarticles'),
     url(r'^createarticle/$',
         login_required(views.CreateArticleView.as_view()),

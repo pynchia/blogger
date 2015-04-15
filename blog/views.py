@@ -1,10 +1,14 @@
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import ListView, TemplateView, FormView, CreateView
+from django.views.generic.detail import SingleObjectMixin
 from . import forms, models
+
 
 class BlogView(ListView):
     template_name = "blog/blog.html"
     model = models.Article
+    queryset = models.Article.objects.order_by('-published_on')
+    paginate_by = models.Article.NUM_ARTICLES_IN_PAGE
 
 
 class StatsView(TemplateView):
@@ -25,8 +29,7 @@ class ContactView(FormView):
         return super(ContactView, self).form_valid(form)
 
 
-class UserArticlesView(ListView):
-    # better to use the combined view showing the details of the author
+class AuthorArticlesView(SingleObjectMixin, ListView):
     template_name = "blog/userarticles.html"
 
 

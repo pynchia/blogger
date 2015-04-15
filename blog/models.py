@@ -8,6 +8,7 @@ class Category(models.Model):
 
     class Meta:
         verbose_name_plural = 'categories'
+
     def __unicode__(self):
         return u"%s" % self.name
 
@@ -27,6 +28,7 @@ class Article(models.Model):
     image = models.ImageField(upload_to='articleimg',
                               help_text='optimal size %dx%d pixels' % (
                                             IMG_MAX_WIDTH, IMG_MAX_HEIGHT))
+    NUM_ARTICLES_IN_PAGE = 8
 
     def __unicode__(self):
         return u"%s" % self.title
