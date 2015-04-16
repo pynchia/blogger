@@ -1,8 +1,9 @@
 from django import forms
 from django.core.mail import EmailMessage
 import re
-from . import models
 from django.conf import settings
+from . import models
+#from blogger.utils import xyz
 
 
 class ContactForm(forms.Form):
@@ -29,15 +30,19 @@ class ArticleForm(forms.ModelForm):
         model = models.Article
         fields = ['title', 'body', 'categories', 'tags', 'image']
 
-    def clean_tags(self):
-        return " ".join(set(re.findall(r"[\w'-]+",
-                                       self.cleaned_data['tags']))).lower()
+    # def clean_tags(self):
+    #     return " ".join(set(re.findall(r"[\w'-]+",
+    #                                    self.cleaned_data['tags']))).lower()
 
     def clean(self):
-        tags = self.cleaned_data.get('tags')
+        tags = re.findall(r"[\w'-]+", self.cleaned_data['tags'])
         categs = self.cleaned_data.get('categories')
-        if tags and categs:
+        # if the categs are valid (i.e. at least one selected)
+        if categs:
             categs = [c.name.lower() for c in categs]
-            tags += " "+" ".join(t for t in categs if t not in tags)
-            self.cleaned_data['tags'] = tags
+            # now add categs to tags and remove duplicates
+            newtags = set(tags+categs)
+            # rejoin the tags and add a space on both ends to enable
+            # exact search of tags
+            self.cleaned_data['tags'] = " "+" ".join(newtags)+" "
 

@@ -21,4 +21,7 @@ urlpatterns = [
     url(r'^createarticle/$',
         login_required(views.CreateArticleView.as_view()),
         name='createarticle'),
+    url(r'^search/$',
+        views.SearchArticlesView.as_view(),
+        name='search'),
 ]

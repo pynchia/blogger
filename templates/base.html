@@ -26,13 +26,13 @@
        </ul>
       </div>
       <div class="searchform">
-        <form id="formsearch" name="formsearch" method="post" action="#">
-		<input name="button_search" src="{% static "images/search_btn.gif" %}" class="button_search" type="image" />
+	      <form id="formsearch" name="formsearch" method="GET" action="{% url 'blog:search' %}">
+	  <input name="button_search" src="{% static "images/search_btn.gif" %}" class="button_search" type="image" />
           <span>
-          <input name="editbox_search" class="editbox_search" id="editbox_search" maxlength="80" value="Search" type="text" />
+          <input name="search" class="editbox_search" id="id_search" maxlength="80" value="" type="text" />
           </span>
           <div class="clr"></div>
-        </form>
+       </form>
       </div>
     </div>
   </div>

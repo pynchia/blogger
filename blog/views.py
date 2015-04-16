@@ -1,21 +1,24 @@
+import re
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import ListView, TemplateView, FormView, CreateView
 from django.views.generic.detail import SingleObjectMixin
+from django.db.models import Q
 from django.contrib.auth.models import User
-from . import forms, models
+from . import forms
+from .models import Article
 
 
 class BlogView(ListView):
-    # model = models.Article
-    queryset = models.Article.objects.order_by('-published_on')
+    # model = Article
+    queryset = Article.objects.order_by('-published_on')
     template_name = "blog/blog.html"
-    paginate_by = models.Article.NUM_ARTICLES_IN_PAGE
+    paginate_by = Article.NUM_ARTICLES_IN_PAGE
 
 
 class AuthorArticlesView(SingleObjectMixin, ListView):
-    # model = models.Article
+    # model = Article
     template_name = "blog/authorarticles.html"
-    paginate_by = models.Article.NUM_ARTICLES_IN_PAGE
+    paginate_by = Article.NUM_ARTICLES_IN_PAGE
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object(queryset=User.objects.all())
@@ -28,6 +31,21 @@ class AuthorArticlesView(SingleObjectMixin, ListView):
         context = super(AuthorArticlesView, self).get_context_data(**kwargs)
         context['author'] = self.object
         return context
+
+
+class SearchArticlesView(ListView):
+    # model = Article
+    #template_name = "blog/searcharticles.html"
+    template_name = "blog/blog.html"
+    paginate_by = Article.NUM_ARTICLES_IN_PAGE
+
+    def get_queryset(self):
+        oritags = re.findall(r"[\w'-]+",
+                             self.request.GET.get(u'search', "").lower())
+        # get rid of duplicates
+        searchtags = set(oritags)
+        queryargs = [Q(tags__contains=" "+i+" ") for i in searchtags]
+        return Article.objects.filter(*queryargs).order_by('-published_on')
 
 
 class StatsView(TemplateView):
