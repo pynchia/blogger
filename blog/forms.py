@@ -1,7 +1,8 @@
+import re
 from django import forms
 from django.core.mail import EmailMessage
-import re
 from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
 from . import models
 #from blogger.utils import xyz
 
@@ -34,15 +35,27 @@ class ArticleForm(forms.ModelForm):
     #     return " ".join(set(re.findall(r"[\w'-]+",
     #                                    self.cleaned_data['tags']))).lower()
 
+    def clean_image(self):
+        imgdata = self.cleaned_data.get('image')
+        # if it's there it's valid
+        if imgdata:
+            if imgdata.size > settings.MAX_UPLOAD_SIZE:
+                raise forms.ValidationError(
+                        _('The image file size must be under %(max_size)d bytes. Current file size is %(cur_size)d bytes.'),
+                        code='invalid',
+                        params={'max_size': settings.MAX_UPLOAD_SIZE,
+                                'cur_size': imgdata.size })
+
     def clean(self):
+        super(ArticleForm, self).clean()
         tags = re.findall(r"[\w'-]+", self.cleaned_data['tags'])
         categs = self.cleaned_data.get('categories')
         # if the categs are valid (i.e. at least one selected)
         if categs:
             categs = [c.name.lower() for c in categs]
-            # now add categs to tags and remove duplicates
+            # add the selected categs to the tags and remove duplicates
             newtags = set(tags+categs)
             # rejoin the tags and add a space on both ends to enable
-            # exact search of tags
+            # exact searching of tags
             self.cleaned_data['tags'] = " "+" ".join(newtags)+" "
 
