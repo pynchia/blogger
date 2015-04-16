@@ -1,9 +1,10 @@
 import re
+from PIL import Image
 from django import forms
 from django.core.mail import EmailMessage
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from . import models
+from .models import Article
 #from blogger.utils import xyz
 
 
@@ -28,7 +29,7 @@ class ArticleForm(forms.ModelForm):
     required_css_class = 'required'
 
     class Meta:
-        model = models.Article
+        model = Article
         fields = ['title', 'body', 'categories', 'tags', 'image']
 
     # def clean_tags(self):
@@ -45,6 +46,7 @@ class ArticleForm(forms.ModelForm):
                         code='invalid',
                         params={'max_size': settings.MAX_UPLOAD_SIZE,
                                 'cur_size': imgdata.size })
+        return imgdata
 
     def clean(self):
         super(ArticleForm, self).clean()
@@ -58,4 +60,13 @@ class ArticleForm(forms.ModelForm):
             # rejoin the tags and add a space on both ends to enable
             # exact searching of tags
             self.cleaned_data['tags'] = " "+" ".join(newtags)+" "
+
+    def save(self, *args, **kwargs):
+        article = super(ArticleForm, self).save(*args, **kwargs)
+        if 'image' in self.changed_data:
+            im = Image.open(article.image.path)
+            im.thumbnail((Article.IMG_MAX_WIDTH,
+                          Article.IMG_MAX_HEIGHT,), Image.ANTIALIAS)
+            im.save(article.image.path)
+        return article
 
