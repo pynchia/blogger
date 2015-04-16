@@ -2,10 +2,10 @@
 {% block nav_blog %}class="active"{% endblock %}
 {% block mainbar %}
 <div class="article">
-	<h2>Articles posted by {{ author.first_name }}&nbsp{{ author.last_name }}</h2>
-	 <p>Username: {{ author.username }}</p>
-	 <p>email: {{ author.email }}</p>
-	 <p>Joined on: {{ author.date_joined }}</p>
+	<h2>Articles posted by {{ object.first_name }}&nbsp{{ object.last_name }}</h2>
+	<p>Username: <strong>{{ object.username }}</strong></p>
+	<p>email: <strong><a href="mailto:{{ object.email }}?subject=A%20message">{{ object.email }}</a></strong></p>
+	<p>Joined on: <strong>{{ object.date_joined }}</strong></p>
 </div>
 <div class="clr"></div>
 {% include "blog/articles.html" %}

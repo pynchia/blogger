@@ -28,10 +28,12 @@ class AuthorArticlesView(SingleObjectMixin, ListView):
     def get_queryset(self):
         return self.object.article_set.order_by('-published_on')
 
-    def get_context_data(self, **kwargs):
-        context = super(AuthorArticlesView, self).get_context_data(**kwargs)
-        context['author'] = self.object
-        return context
+    # no need to override get_context_data, since self.object
+    # is available to the template! (as object)
+    # def get_context_data(self, **kwargs):
+    #     context = super(AuthorArticlesView, self).get_context_data(**kwargs)
+    #     context['author'] = self.object
+    #     return context
 
 
 class SearchArticlesView(ListView):
