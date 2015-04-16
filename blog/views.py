@@ -1,6 +1,7 @@
 import re
 from django.core.urlresolvers import reverse_lazy
-from django.views.generic import ListView, TemplateView, FormView, CreateView
+from django.views.generic import ListView, \
+        TemplateView, FormView, CreateView, UpdateView
 from django.views.generic.detail import SingleObjectMixin
 from django.db.models import Q
 from django.contrib.auth.models import User
@@ -68,9 +69,17 @@ class ContactView(FormView):
 
 class CreateArticleView(CreateView):
     form_class = forms.ArticleForm
-    template_name = "blog/createarticle.html"
+    template_name = "blog/create_updatearticle.html"
     success_url = reverse_lazy("blog:blog")
 
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super(CreateArticleView, self).form_valid(form)
+
+
+class UpdateArticleView(UpdateView):
+    model = Article
+    form_class = forms.ArticleForm
+    template_name = "blog/create_updatearticle.html"
+    success_url = reverse_lazy("blog:blog")
+

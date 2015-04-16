@@ -13,7 +13,7 @@
 		 <a href="#" class="obg"><strong>Comments (N)</strong></a>
 		 {% if article.author == request.user %}
 		  <span>&nbsp;&bull;&nbsp;</span>
-		  <a href="#"><strong>Edit</strong></a>
+		  <a href="{% url 'blog:updatearticle' pk=article.id %}"><strong>Edit</strong></a>
 		 {% endif %}
 		</p>
 		<p>

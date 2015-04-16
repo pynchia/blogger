@@ -2,7 +2,13 @@
 {% load staticfiles %}
 {% block mainbar %}
 	<div class="article">
-		<h2>Create a new article</h2>
+		<h2>
+		 {% if object %}
+		 	Update article
+		 {% else %}
+		 	Create a new article
+		 {% endif %}
+		</h2>
 		<div class="clr"></div>
 		<ol>
 		<form enctype="multipart/form-data" method='POST' action=''>
