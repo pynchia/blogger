@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block nav_blog %}class="active"{% endblock %}
+{% block mainbar %}
+<div class="article">
+	<h2>{{ object.name|capfirst }}</h2>
+	<p>{{ object.descr }}</p>
+</div>
+<div class="clr"></div>
+{% include "blog/articles.html" %}
+{% endblock %}

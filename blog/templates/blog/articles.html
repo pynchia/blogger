@@ -17,9 +17,9 @@
 		 {% endif %}
 		</p>
 		<p>
-		 Filed under:
+		 Categories:
 		 {% for categ in article.categories.all %}
-			<a href="#">{{ categ|capfirst }}</a>
+		 <a href="{% url 'blog:categarticles' pk=categ.id %}">{{ categ|capfirst }}</a>
 		 {% endfor %}
 		 <span>&nbsp;&bull;&nbsp;</span>
 		 Tags: {{ article.tags }}

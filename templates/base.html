@@ -43,30 +43,43 @@
       </div>
       <div class="sidebar">
       {% block sidebar %}
-      	<div class="gadget">
-	 <h2 class="star"><span><cufon class="cufon cufon-canvas" alt="Staff menu" style="width: 90px; height: 24px;"><canvas width="138" height="34" style="width: 138px; height: 34px; top: -5px; left: -15px;"></canvas><cufontext>Staff menu</cufontext></cufon></span></h2>
-	 <div class="clr"></div>
-	  <ul class="sb_menu">
-	  {% if request.user.is_authenticated %}
-	   <li>
-	    <a href="{% url 'blog:createarticle' %}">New article</a>
-	   </li>
-	   <li>
-	    <a href="{% url 'blog:authorarticles' pk=request.user.id %}">My articles</a>
-	   </li>
-	   <li>
+       <div class="gadget">
+	<h2 class="star"><span><cufon class="cufon cufon-canvas" alt="Staff menu" style="width: 90px; height: 24px;"><canvas width="138" height="34" style="width: 138px; height: 34px; top: -5px; left: -15px;"></canvas><cufontext>Staff menu</cufontext></cufon></span></h2>
+	<div class="clr"></div>
+	<ul class="sb_menu">
+	 {% if request.user.is_authenticated %}
+	  <li>
+	   <a href="{% url 'blog:createarticle' %}">New article</a>
+	  </li>
+	  <li>
+	   <a href="{% url 'blog:authorarticles' pk=request.user.id %}">My articles</a>
+	  </li>
+	  <li>
 	   <a href="{% url 'logout' %}">Logout <strong>{{ request.user.get_username }}</strong></a>
-	   </li>
-	  {% else %}
-	   <li>
-	    <a href="{% url 'login' %}">Login</a>
-	   </li>
-	  {% endif %}
-  	  </ul>
-	</div>
-      {% endblock %}
-      </div>
-      <div class="clr"></div>
+	  </li>
+	 {% else %}
+	  <li>
+	   <a href="{% url 'login' %}">Login</a>
+	  </li>
+	 {% endif %}
+  	</ul>
+       </div>
+      {% if categories %}
+       <div class="gadget">
+	<h2 class="star"><span><cufon class="cufon cufon-canvas" alt="Categories" style="width: 90px; height: 24px;"><canvas width="138" height="34" style="width: 138px; height: 34px; top: -5px; left: -15px;"></canvas><cufontext>Categories</cufontext></cufon></span></h2>
+	<div class="clr"></div>
+	<ul class="sb_menu">
+	 {% for categ in categories %}
+	  <li>
+	   <a href="{% url 'blog:categarticles' pk=categ.id %}">{{ categ|capfirst }}</a>
+	  </li>
+	 {% endfor %}
+  	</ul>
+       </div>
+      {% endif %}
+     {% endblock %}
+     </div>
+     <div class="clr"></div>
     </div>
   </div>
   <div class="fbg">
