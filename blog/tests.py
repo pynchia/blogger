@@ -10,7 +10,13 @@ class MyTestCase(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        # setup data for the whole testcase
+        # setup the data for the testcase. The right
+        # place where to populate the db with records
+        # Still fresh to every test method called
+        # but it's much quicker/lighter on the DB
+        # than doing it in the setUp method, which
+        # can be used to setup instance variables
+        # and avoid repeating code 
         pass
 
     def setUp(self):
@@ -31,6 +37,16 @@ class MyTestCase(TestCase):
         response = self.client.get(reverse('blog:blog'))
         # the page exists and is returned
         self.assertEqual(response.status_code, 200)
-        # there should be three articles visible on the page
+        # there should be three articles on the page
         numart = len(response.context['object_list'])
         self.assertEqual(numart, 3)
+
+    def test_music_categ_has_two_articles(self):
+        response = self.client.get(reverse('blog:categarticles',
+                                           kwargs={'pk': self.catmusic.id, })
+                                  )
+        # the page exists and is returned
+        self.assertEqual(response.status_code, 200)
+        # there should be two articles on the page
+        numart = len(response.context['object_list'])
+        self.assertEqual(numart, 2)
