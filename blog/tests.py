@@ -22,6 +22,7 @@ class MyTestCase(TestCase):
     def setUp(self):
         self.catmusic = Category.objects.get(pk=1)
         self.catphoto = Category.objects.get(pk=2)
+        self.author = Category.objects.get(pk=1)
 
     def test_relat_between_articles_and_categories(self):
         n = self.catmusic.articles.count()
@@ -33,15 +34,18 @@ class MyTestCase(TestCase):
         response = self.client.get(reverse('home'))
         self.assertRedirects(response, reverse('blog:blog'), status_code=301)
 
-    def test_blog_page_has_three_articles(self):
+    def test_blog_page(self):
         response = self.client.get(reverse('blog:blog'))
         # the page exists and is returned
         self.assertEqual(response.status_code, 200)
         # there should be three articles on the page
         numart = len(response.context['object_list'])
         self.assertEqual(numart, 3)
+        # and there should be three categories on the page
+        numcat = len(response.context['categories'])
+        self.assertEqual(numcat, 3)
 
-    def test_music_categ_has_two_articles(self):
+    def test_categ_has_articles(self):
         response = self.client.get(reverse('blog:categarticles',
                                            kwargs={'pk': self.catmusic.id, })
                                   )
@@ -50,3 +54,13 @@ class MyTestCase(TestCase):
         # there should be two articles on the page
         numart = len(response.context['object_list'])
         self.assertEqual(numart, 2)
+
+    def test_author_has_articles(self):
+        response = self.client.get(reverse('blog:authorarticles',
+                                           kwargs={'pk': self.author.id, })
+                                  )
+        # the page exists and is returned
+        self.assertEqual(response.status_code, 200)
+        # there should be one article on the page
+        numart = len(response.context['object_list'])
+        self.assertEqual(numart, 1)
