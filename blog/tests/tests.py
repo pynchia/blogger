@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
-from .models import Category, Article
+from blog.models import Category, Article
 # Create your tests here.
 
 
@@ -64,3 +64,17 @@ class MyTestCase(TestCase):
         # there should be one article on the page
         numart = len(response.context['object_list'])
         self.assertEqual(numart, 1)
+
+    def test_newarticle(self):
+        logged = self.client.login(username='pinom', password='xyzxyz')
+        self.assertTrue(logged)
+        with open('blog/tests/img_ok-horiz.jpg') as imgf:
+            post_data = {'title': "test to post an article",
+                         'body': """This is a test.
+                                    The sun is hot and the earth is round""",
+                         'categories': ('1', '2'),
+                         'tags': "cippa",
+                         'image': imgf}
+            response = self.client.post(reverse('blog:createarticle'),
+                                        data=post_data)
+        self.assertRedirects(response, reverse('blog:blog'), status_code=302)
