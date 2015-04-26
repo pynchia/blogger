@@ -32,12 +32,17 @@ class MyTestCase(TestCase):
 
     def test_homepage_redirect_to_blog(self):
         response = self.client.get(reverse('home'))
+        # it should be redirected permanently HTTP 301
         self.assertRedirects(response, reverse('blog:blog'), status_code=301)
 
-    def test_blog_page(self):
+    def test_get_blog_page(self):
         response = self.client.get(reverse('blog:blog'))
         # the page exists and is returned
         self.assertEqual(response.status_code, 200)
+        return response
+
+    def test_articles_on_blogpage(self):
+        response = self.test_get_blog_page()
         # there should be three articles on the page
         numart = len(response.context['object_list'])
         self.assertEqual(numart, 3)
@@ -65,11 +70,12 @@ class MyTestCase(TestCase):
         numart = len(response.context['object_list'])
         self.assertEqual(numart, 1)
 
-    def test_newarticle(self):
+    def test_createnewarticle(self):
         logged = self.client.login(username='pinom', password='xyzxyz')
         self.assertTrue(logged)
+        ARTICLE_TITLE = "Post test"
         with open('blog/tests/img_ok-horiz.jpg') as imgf:
-            post_data = {'title': "test to post an article",
+            post_data = {'title': ARTICLE_TITLE,
                          'body': """This is a test.
                                     The sun is hot and the earth is round""",
                          'categories': ('1', '2'),
@@ -77,4 +83,13 @@ class MyTestCase(TestCase):
                          'image': imgf}
             response = self.client.post(reverse('blog:createarticle'),
                                         data=post_data)
+        # it should be redirected temp. HTTP 302
         self.assertRedirects(response, reverse('blog:blog'), status_code=302)
+        # get the blog page
+        response = self.test_get_blog_page()
+        # now there should be four articles on the page
+        numart = len(response.context['object_list'])
+        self.assertEqual(numart, 4)
+        # and the first(latest) article must be the one we created
+        latestart = response.context['object_list'][0]
+        self.assertEqual(latestart.title, ARTICLE_TITLE)
