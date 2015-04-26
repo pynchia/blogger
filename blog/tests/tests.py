@@ -93,3 +93,7 @@ class MyTestCase(TestCase):
         # and the first(latest) article must be the one we created
         latestart = response.context['object_list'][0]
         self.assertEqual(latestart.title, ARTICLE_TITLE)
+
+    def test_fail(self):
+        self.fail("Testing ain't over yet")
+
