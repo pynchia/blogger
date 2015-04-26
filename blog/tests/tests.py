@@ -16,7 +16,7 @@ class MyTestCase(TestCase):
         # but it's much quicker/lighter on the DB
         # than doing it in the setUp method, which
         # can be used to setup instance variables
-        # and avoid repeating code 
+        # and avoid repeating code  instead
         pass
 
     def setUp(self):
