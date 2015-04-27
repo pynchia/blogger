@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.core import mail
 from django.core.urlresolvers import reverse
 from blog.models import Category, Article
 # Create your tests here.
@@ -93,6 +94,20 @@ class MyTestCase(TestCase):
         # and the first(latest) article must be the one we created
         latestart = response.context['object_list'][0]
         self.assertEqual(latestart.title, ARTICLE_TITLE)
+
+    def test_contact_form(self):
+        logged = self.client.login(username='pinom', password='xyzxyz')
+        self.assertTrue(logged)
+        post_data = {'name': "pippo",
+                     'email_address': "pippo@pluto.com",
+                     'message': "hey your blog really sucks!"}
+        response = self.client.post(reverse('blog:contact'),
+                                    data=post_data)
+    # it should be redirected temp. HTTP 302
+        self.assertRedirects(response, reverse('blog:blog'), status_code=302)
+        # there should be one msg
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertTrue("sucks" in mail.outbox[0].body)
 
     def test_fail(self):
         self.fail("Testing ain't over yet")
