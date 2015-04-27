@@ -107,7 +107,7 @@ class MyTestCase(TestCase):
         self.assertRedirects(response, reverse('blog:blog'), status_code=302)
         # there should be one msg
         self.assertEqual(len(mail.outbox), 1)
-        self.assertTrue("sucks" in mail.outbox[0].body)
+        self.assertIn("sucks", mail.outbox[0].body)
 
     def test_fail(self):
         self.fail("Testing ain't over yet")
