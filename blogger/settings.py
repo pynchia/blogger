@@ -16,9 +16,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MEDIA_ROOT = BASE_DIR+"/media"
 STATIC_ROOT = BASE_DIR+"/static"
-STATICFILES_DIRS = (
-        BASE_DIR+"/globstatic",
-        )
+STATICFILES_DIRS = (BASE_DIR+"/globstatic", )
 # FIXTURE_DIRS = (BASE_DIR+"/path/xyz", )
 
 

@@ -75,7 +75,7 @@ class MyTestCase(TestCase):
         logged = self.client.login(username='pinom', password='xyzxyz')
         self.assertTrue(logged)
         ARTICLE_TITLE = "Post test"
-        with open('blog/tests/img_ok-horiz.jpg') as imgf:
+        with open('blog/tests/my_test_image.jpg') as imgf:
             post_data = {'title': ARTICLE_TITLE,
                          'body': """This is a test.
                                     The sun is hot and the earth is round""",
