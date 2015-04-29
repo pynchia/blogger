@@ -14,7 +14,7 @@ class Category(models.Model):
 
 
 class Article(models.Model):
-    author = models.ForeignKey(User, editable=False)
+    author = models.ForeignKey(User, related_name='articles', editable=False)
     published_on = models.DateTimeField(auto_now_add=True, editable=False)
     categories = models.ManyToManyField(Category,
                                         related_name='articles',

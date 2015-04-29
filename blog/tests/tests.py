@@ -31,18 +31,21 @@ class MyTestCase(TestCase):
         n = self.catphoto.articles.count()
         self.assertEqual(n, 1)
 
-    def test_homepage_redirect_to_blog(self):
+    def test_homepage_redirects_to_blog(self):
         response = self.client.get(reverse('home'))
         # it should be redirected permanently HTTP 301
         self.assertRedirects(response, reverse('blog:blog'), status_code=301)
 
-    def test_get_blog_page(self):
-        response = self.client.get(reverse('blog:blog'))
+    def get_page_200(self, pagename, kwargs=None):
+        response = self.client.get(reverse(pagename, kwargs=kwargs))
         # the page exists and is returned
         self.assertEqual(response.status_code, 200)
         return response
 
-    def test_articles_on_blogpage(self):
+    def test_get_blog_page(self):
+        return self.get_page_200('blog:blog')
+
+    def test_blogpage_shows_articles(self):
         response = self.test_get_blog_page()
         # there should be three articles on the page
         numart = len(response.context['object_list'])
@@ -52,21 +55,15 @@ class MyTestCase(TestCase):
         self.assertEqual(numcat, 3)
 
     def test_categ_has_articles(self):
-        response = self.client.get(reverse('blog:categarticles',
-                                           kwargs={'pk': self.catmusic.id, })
-                                  )
-        # the page exists and is returned
-        self.assertEqual(response.status_code, 200)
+        response = self.get_page_200('blog:categarticles',
+                                     kwargs={'pk': self.catmusic.id, })
         # there should be two articles on the page
         numart = len(response.context['object_list'])
         self.assertEqual(numart, 2)
 
     def test_author_has_articles(self):
-        response = self.client.get(reverse('blog:authorarticles',
-                                           kwargs={'pk': self.author.id, })
-                                  )
-        # the page exists and is returned
-        self.assertEqual(response.status_code, 200)
+        response = self.get_page_200('blog:authorarticles',
+                                     kwargs={'pk': self.author.id, })
         # there should be one article on the page
         numart = len(response.context['object_list'])
         self.assertEqual(numart, 1)
@@ -108,6 +105,17 @@ class MyTestCase(TestCase):
         # there should be one msg
         self.assertEqual(len(mail.outbox), 1)
         self.assertIn("sucks", mail.outbox[0].body)
+
+    def test_stats_page(self):
+        response = self.get_page_200('blog:stats')
+
+        self.assertIn('stats4authors', response.context)
+        bloggers = response.context['authors']
+        self.assertEqual(len(bloggers), 2)
+
+        self.assertIn('stats4categories', response.context)
+        categories = response.context['categories']
+        self.assertEqual(len(categories), 3)
 
     def test_fail(self):
         self.fail("Testing ain't over yet")

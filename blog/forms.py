@@ -5,7 +5,6 @@ from django.core.mail import EmailMessage
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from .models import Article
-#from blogger.utils import xyz
 
 
 class ContactForm(forms.Form):

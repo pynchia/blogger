@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.views.generic import ListView, \
         TemplateView, FormView, CreateView, UpdateView
 from django.views.generic.detail import SingleObjectMixin
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.contrib.auth.models import User
 from . import forms
 from .models import Category, Article
@@ -34,7 +34,7 @@ class AuthorArticlesView(CategoriesMixin, SingleObjectMixin, ListView):
         return super(AuthorArticlesView, self).get(request, *args, **kwargs)
 
     def get_queryset(self):
-        return self.object.article_set.order_by('-published_on')
+        return self.object.articles.order_by('-published_on')
 
     # no need to override get_context_data, since self.object
     # is available to the template! (as object)
@@ -74,6 +74,17 @@ class SearchArticlesView(CategoriesMixin, ListView):
 
 class StatsView(CategoriesMixin, TemplateView):
     template_name = "blog/stats.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(StatsView, self).get_context_data(**kwargs)
+        context['stats4authors'] = User.objects. \
+                                   annotate(numarticles=Count('articles')). \
+                                   order_by('-numarticles')
+        context['stats4categories'] = Category.objects. \
+                                      annotate(
+                                            numarticles=Count('articles')). \
+                                      order_by('-numarticles')
+        return context
 
 
 class AboutView(CategoriesMixin, TemplateView):
