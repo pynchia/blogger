@@ -79,11 +79,11 @@ class StatsView(CategoriesMixin, TemplateView):
         context = super(StatsView, self).get_context_data(**kwargs)
         context['stats4authors'] = User.objects. \
                                    annotate(numarticles=Count('articles')). \
-                                   order_by('-numarticles')
+                                   order_by('-numarticles')[:10]
         context['stats4categories'] = Category.objects. \
                                       annotate(
                                             numarticles=Count('articles')). \
-                                      order_by('-numarticles')
+                                      order_by('-numarticles')[:10]
         return context
 
 

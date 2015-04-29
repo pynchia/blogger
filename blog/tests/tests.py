@@ -106,16 +106,26 @@ class MyTestCase(TestCase):
         self.assertEqual(len(mail.outbox), 1)
         self.assertIn("sucks", mail.outbox[0].body)
 
+    @staticmethod
+    def is_reverse_sorted(x, key = lambda x: x):
+        return all([key(x[i]) >= key(x[i + 1]) for i in xrange(len(x) - 1)])
+
     def test_stats_page(self):
         response = self.get_page_200('blog:stats')
 
         self.assertIn('stats4authors', response.context)
-        bloggers = response.context['authors']
-        self.assertEqual(len(bloggers), 2)
+        stats4authors = response.context['stats4authors']
+        self.assertLessEqual(len(stats4authors), 10)
+        self.assertTrue(self.is_reverse_sorted(stats4authors,
+                                               key=lambda x: x.numarticles),
+                        msg="stats4authors is not reverse-sorted!")
 
         self.assertIn('stats4categories', response.context)
-        categories = response.context['categories']
-        self.assertEqual(len(categories), 3)
+        stats4categories = response.context['stats4categories']
+        self.assertLessEqual(len(stats4categories), 10)
+        self.assertTrue(self.is_reverse_sorted(stats4categories,
+                                               key=lambda x: x.numarticles),
+                        msg="stats4categories is not reverse-sorted!")
 
     def test_fail(self):
         self.fail("Testing ain't over yet")

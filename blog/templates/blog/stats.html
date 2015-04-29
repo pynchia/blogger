@@ -3,10 +3,34 @@
 {% block mainbar %}
 	<div class="article">
 		<h2>Most active bloggers</h2>
+		<table>
+		 <tr>
+		  <th>Author</th>
+		  <th>Articles</th>
+		 </tr>
+		 {% for stat in stats4authors %}
+		  <tr>
+		   <td>{{ stat.first_name }} {{ stat.last_name }}</td>
+		   <td>{{ stat.numarticles }}</td>
+		  </tr>
+		 {% endfor %}
+		</table>
 		<div class="clr"></div>
 	</div>
 	<div class="article">
 		<h2>Most active categories</h2>
-		<div class="clr"></div>
+		<table>
+		 <tr>
+		  <th>Category</th>
+		  <th>Articles</th>
+		 </tr>
+		 {% for stat in stats4categories %}
+		  <tr>
+		   <td>{{ stat.name }}</td>
+		   <td>{{ stat.numarticles }}</td>
+		  </tr>
+		 {% endfor %}
+		</table>
+	<div class="clr"></div>
 	</div>
 {% endblock %}
