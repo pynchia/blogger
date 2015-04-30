@@ -107,7 +107,7 @@ class MyTestCase(TestCase):
         self.assertIn("sucks", mail.outbox[0].body)
 
     @staticmethod
-    def is_reverse_sorted(x, key = lambda x: x):
+    def is_reverse_sorted(x, key=lambda x: x):
         return all([key(x[i]) >= key(x[i + 1]) for i in xrange(len(x) - 1)])
 
     def test_stats_page(self):
