@@ -1,7 +1,6 @@
 Django==1.8
 Pillow==2.8.1
 argparse==1.2.1
-behave==1.2.5
 coverage==3.7.1
 django-appconf==1.0.1
 django-compressor==1.4
