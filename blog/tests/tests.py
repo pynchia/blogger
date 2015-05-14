@@ -7,18 +7,19 @@ from blog.models import Category, Article
 
 class MyTestCase(TestCase):
 
-    fixtures = ['auth.json', 'blog.json', ]
+    # @classmethod
+    # def setUpTestData(cls):
+    #   # setup the data for the testcase. The right
+    #   # place where to populate the db with records
+    #   # Still fresh to every test method called
+    #   # but it's much quicker/lighter on the DB
+    #   # than doing it in the setUp method, which
+    #   # can be used to setup instance variables
+    #   # and avoid repeating code  instead
+    #   # pass
 
-    @classmethod
-    def setUpTestData(cls):
-        # setup the data for the testcase. The right
-        # place where to populate the db with records
-        # Still fresh to every test method called
-        # but it's much quicker/lighter on the DB
-        # than doing it in the setUp method, which
-        # can be used to setup instance variables
-        # and avoid repeating code  instead
-        pass
+    # loaded before every single test
+    fixtures = ['auth.json', 'blog.json', ]
 
     def setUp(self):
         self.catmusic = Category.objects.get(pk=1)
