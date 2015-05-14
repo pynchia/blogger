@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
 
 
 class Category(models.Model):
@@ -8,6 +9,9 @@ class Category(models.Model):
 
     class Meta:
         verbose_name_plural = 'categories'
+
+    def get_absolute_url(self):
+        return '%s/api/categories/%d/' % (settings.SITE_URL, self.id)
 
     def __unicode__(self):
         return u"%s" % self.name
@@ -31,5 +35,8 @@ class Article(models.Model):
                                             IMG_MAX_WIDTH, IMG_MAX_HEIGHT))
     NUM_ARTICLES_IN_PAGE = 8
 
+    def get_absolute_url(self):
+        return '%s/api/articles/%d/' % (settings.SITE_URL, self.id)
+ 
     def __unicode__(self):
         return u"%s" % self.title

@@ -42,6 +42,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 )
+INSTALLED_APPS += ('debug_toolbar', )
+INSTALLED_APPS += ('rest_framework', )
 INSTALLED_APPS += ("blog", )
 
 MIDDLEWARE_CLASSES = (
@@ -90,7 +92,6 @@ DATABASES = {
     }
 }
 
-INSTALLED_APPS += ('debug_toolbar', )
 INTERNAL_IPS = ("127.0.0.1",)
 MIDDLEWARE_CLASSES += \
         ("debug_toolbar.middleware.DebugToolbarMiddleware", )
@@ -123,4 +124,16 @@ EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
 EMAIL_PORT = 587
 
 MAX_UPLOAD_SIZE = 262144
+
+#import socket
+#try:
+#        HOSTNAME = socket.gethostname()
+#except:
+#        HOSTNAME = 'localhost'
+HOSTNAME = 'localhost'
+SITE_URL = 'http://%s:8081' % HOSTNAME
+
+REST_FRAMEWORK = {
+                  'PAGE_SIZE': 10,
+                 }
 
