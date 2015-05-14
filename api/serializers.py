@@ -4,6 +4,8 @@ from blog import models
 
 
 class CategorySerializer(serializers.ModelSerializer):
+    articles = serializers.PrimaryKeyRelatedField(many=True,
+                            queryset=models.Article.objects.all())
 
     class Meta:
         model = models.Category
@@ -14,7 +16,7 @@ class CategoryListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Category
-        fields = ('name', )
+        fields = ('url', 'id', 'name', )
 
 
 class ArticleSerializer(serializers.ModelSerializer):
@@ -28,11 +30,14 @@ class ArticleListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Article
-        fields = ('title', )
+        fields = ('url', 'id', 'title', )
 
 
 class AuthorSerializer(serializers.ModelSerializer):
+    articles = serializers.PrimaryKeyRelatedField(many=True,
+                            queryset=models.Article.objects.all())
 
     class Meta:
         model = User
         # WIP fields = (
+        exclude = ('password', )
