@@ -25,7 +25,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
             return serializers.CategorySerializer
 
     def get_queryset(self):
-        substring = self.request.QUERY_PARAMS.get('name', None)
+        substring = self.request.query_params.get('name', None)
         if substring is not None:
             return self.queryset.filter(name__contains=substring.lower())
         else:
@@ -51,7 +51,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
             return serializers.ArticleSerializer
 
     def get_queryset(self):
-        substring = self.request.QUERY_PARAMS.get('title', None)
+        substring = self.request.query_params.get('title', None)
         if substring is not None:
             return self.queryset.filter(title__contains=substring.lower())
         else:
@@ -77,7 +77,7 @@ class AuthorViewSet(viewsets.ReadOnlyModelViewSet):
             return serializers.AuthorSerializer
 
     def get_queryset(self):
-        substring = self.request.QUERY_PARAMS.get('username', None)
+        substring = self.request.query_params.get('username', None)
         if substring is not None:
             return self.queryset.filter(username__contains=substring.lower())
         else:
