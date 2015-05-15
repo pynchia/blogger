@@ -57,6 +57,9 @@ class ArticleViewSet(viewsets.ModelViewSet):
         else:
             return self.queryset
 
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
 
 class AuthorViewSet(viewsets.ReadOnlyModelViewSet):
     """
