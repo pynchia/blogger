@@ -63,7 +63,10 @@ class ArticleViewSet(viewsets.ModelViewSet):
 
 class AuthorViewSet(viewsets.ReadOnlyModelViewSet):
     """
-    this viewset provides 'list' and 'retrieve' actions to everyone.
+    this viewset provides 'list' and 'retrieve' actions only.
+    The 'list' action allows searching for a substring (case ins.)
+    of its username via the 'username' url param
+    (/api/authors/?username=<substring>)
     """
     queryset = User.objects.all()
 
