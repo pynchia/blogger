@@ -21,13 +21,15 @@ class CategoryViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action == 'list':
             return serializers.CategoryListSerializer
-        return serializers.CategorySerializer
+        else:
+            return serializers.CategorySerializer
 
     def get_queryset(self):
         substring = self.request.QUERY_PARAMS.get('name', None)
         if substring is not None:
             return self.queryset.filter(name__contains=substring.lower())
-        return self.queryset
+        else:
+            return self.queryset
 
 
 class ArticleViewSet(viewsets.ModelViewSet):
@@ -52,12 +54,26 @@ class ArticleViewSet(viewsets.ModelViewSet):
         substring = self.request.QUERY_PARAMS.get('title', None)
         if substring is not None:
             return self.queryset.filter(title__contains=substring.lower())
-        return self.queryset
+        else:
+            return self.queryset
 
 
 class AuthorViewSet(viewsets.ReadOnlyModelViewSet):
     """
     this viewset provides 'list' and 'retrieve' actions to everyone.
     """
-    serializer_class = serializers.AuthorSerializer
     queryset = User.objects.all()
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return serializers.AuthorListSerializer
+        else:
+            return serializers.AuthorSerializer
+
+    def get_queryset(self):
+        substring = self.request.QUERY_PARAMS.get('username', None)
+        if substring is not None:
+            return self.queryset.filter(username__contains=substring.lower())
+        else:
+            return self.queryset
+
