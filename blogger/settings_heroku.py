@@ -90,10 +90,10 @@ WSGI_APPLICATION = 'blogger.wsgi_heroku.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'HOST': os.environ["DJANGO_DB_HOST"],
+        'HOST': 'ciao',
         'NAME': 'blogger',
-        'USER': os.environ["DJANGO_DB_USER"],
-        'PASSWORD': os.environ["DJANGO_DB_PWD"],
+        'USER': 'ciao'],
+        'PASSWORD': 'ciao'],
         'PORT': '',
     }
 }
