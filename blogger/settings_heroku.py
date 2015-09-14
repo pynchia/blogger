@@ -93,7 +93,7 @@ DATABASES = {
         'HOST': 'ciao',
         'NAME': 'blogger',
         'USER': 'ciao',
-        'PASSWORD': 'ciao'],
+        'PASSWORD': 'ciao',
         'PORT': '',
     }
 }
